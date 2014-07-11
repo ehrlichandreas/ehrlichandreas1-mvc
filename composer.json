@@ -1,0 +1,37 @@
+{
+    "name":         "ehrlichandreas/ehrlichandreas1-mvc",
+    "description":  "Zend Framework like mvc module",
+    "type":         "mvc",
+    "keywords": 
+    [
+    ],
+    "license":              "Unlicense",
+    "minimum-stability":    "dev",
+    "authors": 
+    [
+        {
+            "name":     "Andreas Ehrlich",
+            "email":    "ehrlich.andreas@googlemail.com"
+        }
+    ],
+    "autoload": 
+    {
+        "psr-0": 
+        {
+            "EhrlichAndreas":   "src/"
+        }
+    },
+    "repositories":
+    [
+    ],
+    "require": 
+    {
+        "php":                              ">=5.1"
+    },
+    "require-dev":
+    {
+    },
+    "scripts":
+    {
+    }
+}

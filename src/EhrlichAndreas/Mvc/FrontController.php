@@ -96,10 +96,6 @@ class EhrlichAndreas_Mvc_FrontController
         
 		$request = new EhrlichAndreas_Mvc_Request($uri);
         
-        $request->getBasePath();
-        
-        $this->setBaseUrl($request->getBaseUrl());
-        
         $request = $router->route($request);
         
         $response = $this->runByParameter($request);

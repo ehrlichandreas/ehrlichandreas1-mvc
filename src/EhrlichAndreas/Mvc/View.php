@@ -158,7 +158,7 @@ class EhrlichAndreas_Mvc_View
         
         $fileExtension = '.' . ltrim($this->_fileExtension, '.');
         
-        $name = preg_replace('#[\:]+#', '_', $name);
+        $name = preg_replace('#[\:]+#uis', '_', $name);
         
         $name = mb_strtolower($name, 'UTF-8');
         

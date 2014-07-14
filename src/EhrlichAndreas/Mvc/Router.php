@@ -506,7 +506,7 @@ class EhrlichAndreas_Mvc_Router
         // Find the matching route
         $routeMatched = false;
         
-        $match = $request->getRequestUri();
+        $match = $request->getPathInfo();
 
         foreach (array_reverse($this->_routes, true) as $name => $route)
         {

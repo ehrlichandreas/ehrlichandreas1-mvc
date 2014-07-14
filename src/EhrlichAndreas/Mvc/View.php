@@ -460,6 +460,16 @@ class EhrlichAndreas_Mvc_View
         
         return $this;
     }
+    
+    /**
+     * 
+     * @param array $param
+     * @return string
+     */
+    public function widget($param)
+    {
+        return EhrlichAndreas_Mvc_FrontController::getInstance()->runByParameter($param);
+    }
 }
 
 

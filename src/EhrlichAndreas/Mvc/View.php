@@ -160,6 +160,8 @@ class EhrlichAndreas_Mvc_View
         
         $name = preg_replace('#[\:]+#', '_', $name);
         
+        $name = mb_strtolower($name, 'UTF-8');
+        
         $file = $name . $fileExtension ;
         
         $path = $scriptPath . $file;

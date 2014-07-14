@@ -857,7 +857,7 @@ class EhrlichAndreas_Mvc_Request
      */
     public function getSubmoduleKey()
     {
-        return $this->_moduleKey;
+        return $this->_submoduleKey;
     }
 
     /**
@@ -867,12 +867,12 @@ class EhrlichAndreas_Mvc_Request
      */
     public function getSubmoduleName()
     {
-        if (null === $this->_module)
+        if (null === $this->_submodule)
         {
-            $this->_module = $this->getParam($this->getModuleKey());
+            $this->_submodule = $this->getParam($this->getSubmoduleKey());
         }
 
-        return $this->_module;
+        return $this->_submodule;
     }
 
     /**
@@ -1604,7 +1604,7 @@ class EhrlichAndreas_Mvc_Request
      */
     public function setSubmoduleKey($key)
     {
-        $this->_moduleKey = (string) $key;
+        $this->_submoduleKey = (string) $key;
         
         return $this;
     }
@@ -1617,7 +1617,7 @@ class EhrlichAndreas_Mvc_Request
      */
     public function setSubmoduleName($value)
     {
-        $this->_module = $value;
+        $this->_submodule = $value;
         
         return $this;
     }

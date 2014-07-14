@@ -127,9 +127,9 @@ class EhrlichAndreas_Mvc_Router
             {
                 $request->setModuleName($value);
             }
-            elseif (method_exists($request, 'getSubmoduleKey') && method_exists($request, 'setSubmoduleKey') && $param === $request->getSubmoduleKey())
+            elseif (method_exists($request, 'getSubmoduleKey') && method_exists($request, 'setSubmoduleName') && $param === $request->getSubmoduleKey())
             {
-                $request->setSubmoduleKey($value);
+                $request->setSubmoduleName($value);
             }
             elseif (method_exists($request, 'getControllerKey') && method_exists($request, 'setControllerName') && $param === $request->getControllerKey())
             {

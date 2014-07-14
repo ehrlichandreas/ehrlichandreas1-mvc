@@ -158,6 +158,8 @@ class EhrlichAndreas_Mvc_View
         
         $fileExtension = '.' . ltrim($this->_fileExtension, '.');
         
+        $name = preg_replace('#[\:]+#', '_', $name);
+        
         $file = $name . $fileExtension ;
         
         $path = $scriptPath . $file;

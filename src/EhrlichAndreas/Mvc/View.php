@@ -98,7 +98,7 @@ class EhrlichAndreas_Mvc_View
      * @param string $name The variable name.
      * @param mixed $value The variable value.
      * @return void
-     * @throws EhrlichAndreas_Util_Exception if an attempt to set a private or 
+     * @throws EhrlichAndreas_Mvc_Exception if an attempt to set a private or 
      * protected member is detected
      */
 	public function __set($name, $value)
@@ -149,7 +149,7 @@ class EhrlichAndreas_Mvc_View
         {
             $message = 'no view script directory set; unable to determine location for view script';
             
-            $e = new EhrlichAndreas_Util_Exception($message);
+            $e = new EhrlichAndreas_Mvc_Exception($message);
             
             throw $e;
         }
@@ -173,7 +173,7 @@ class EhrlichAndreas_Mvc_View
 
         $message = "script '" . $file . "' not found in path (" . $scriptPath  . ")";
         
-        $e = new EhrlichAndreas_Util_Exception($message);
+        $e = new EhrlichAndreas_Mvc_Exception($message);
         
         throw $e;
     }
@@ -192,7 +192,7 @@ class EhrlichAndreas_Mvc_View
      *
      * @param  array $config  Configuration object
      * @param  string      $section Name of the config section containing view's definitions
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return EhrlichAndreas_Mvc_Router
      */
     public function addConfig($config, $section = null)
@@ -203,7 +203,7 @@ class EhrlichAndreas_Mvc_View
             
             if (!isset($config[$section]) || is_null($config[$section]))
             {
-                throw new EhrlichAndreas_Util_Exception("No route configuration in section '{$section}'");
+                throw new EhrlichAndreas_Mvc_Exception("No route configuration in section '{$section}'");
             }
 
             $config = $config[$section];
@@ -252,7 +252,7 @@ class EhrlichAndreas_Mvc_View
 	 * @param  mixed (Optional) If assigning a named variable, use this
 	 * as the value.
 	 * @return EhrlichAndreas_Mvc_View Fluent interface
-	 * @throws EhrlichAndreas_Util_Exception if $spec is neither a string 
+	 * @throws EhrlichAndreas_Mvc_Exception if $spec is neither a string 
      * nor an array, or if an attempt to set a private or protected member 
      * is detected
 	 */
@@ -282,7 +282,7 @@ class EhrlichAndreas_Mvc_View
         {
             $message = 'assign() expects a string or array, received '.gettype($spec);
             
-			$e = new EhrlichAndreas_Util_Exception($message);
+			$e = new EhrlichAndreas_Mvc_Exception($message);
             
 			throw $e;
 		}
@@ -361,7 +361,7 @@ class EhrlichAndreas_Mvc_View
      *
      * @param  string $name
      * @return false|string False if script not found
-     * @throws EhrlichAndreas_Util_Exception if no script directory set
+     * @throws EhrlichAndreas_Mvc_Exception if no script directory set
      */
     public function getScriptPath($name)
     {
@@ -371,7 +371,7 @@ class EhrlichAndreas_Mvc_View
             
             return $path;
         }
-        catch (EhrlichAndreas_Util_Exception $e)
+        catch (EhrlichAndreas_Mvc_Exception $e)
         {
             if (strstr($e->getMessage(), 'no view script directory set'))
             {

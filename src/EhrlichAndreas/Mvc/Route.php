@@ -231,7 +231,7 @@ class EhrlichAndreas_Mvc_Route
     {
 		if ($this->_reverse===null)
         {
-			throw new EhrlichAndreas_Util_Exception('Cannot assemble. Reversed route is not specified.');
+			throw new EhrlichAndreas_Mvc_Exception('Cannot assemble. Reversed route is not specified.');
 		}
 		
 		$callbacks = $this->_callbacks;
@@ -320,7 +320,7 @@ class EhrlichAndreas_Mvc_Route
             
 			$reverse = '$reverse = '.$reverse."\n<br>";
             
-			throw new EhrlichAndreas_Util_Exception('Cannot assemble. Too few arguments?'/*."\n<br>".$mergedData.$reverse*/);
+			throw new EhrlichAndreas_Mvc_Exception('Cannot assemble. Too few arguments?'/*."\n<br>".$mergedData.$reverse*/);
 		}
 		
 		return $return;

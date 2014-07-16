@@ -247,13 +247,13 @@ class EhrlichAndreas_Mvc_FrontController
      *
      * @param string $base
      * @return EhrlichAndreas_Mvc_FrontController
-     * @throws EhrlichAndreas_Util_Exception for non-string $base
+     * @throws EhrlichAndreas_Mvc_Exception for non-string $base
      */
     public function setBaseUrl($base = null)
     {
         if (!is_string($base) && (null !== $base))
         {
-            throw new Zend_Controller_Exception('Rewrite base must be a string');
+            throw new EhrlichAndreas_Mvc_Exception('Rewrite base must be a string');
         }
 
         $this->_baseUrl = $base;
@@ -274,7 +274,7 @@ class EhrlichAndreas_Mvc_FrontController
      * If a class name is provided, it will instantiate it
      *
      * @param string|EhrlichAndreas_Mvc_Request $request
-     * @throws EhrlichAndreas_Util_Exception if invalid request class
+     * @throws EhrlichAndreas_Mvc_Exception if invalid request class
      * @return EhrlichAndreas_Mvc_FrontController
      */
     public function setRequest($request)

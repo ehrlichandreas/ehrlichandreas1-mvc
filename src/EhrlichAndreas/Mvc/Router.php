@@ -163,7 +163,7 @@ class EhrlichAndreas_Mvc_Router
      *
      * @param  array $config  Configuration object
      * @param  string      $section Name of the config section containing route's definitions
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return EhrlichAndreas_Mvc_Router
      */
     public function addConfig($config, $section = null)
@@ -174,7 +174,7 @@ class EhrlichAndreas_Mvc_Router
             
             if (!isset($config[$section]) || is_null($config[$section]))
             {
-                throw new EhrlichAndreas_Util_Exception("No route configuration in section '{$section}'");
+                throw new EhrlichAndreas_Mvc_Exception("No route configuration in section '{$section}'");
             }
 
             $config = $config[$section];
@@ -258,14 +258,14 @@ class EhrlichAndreas_Mvc_Router
      * @param  mixed $name The name of a Route to use
      * @param  bool $reset Whether to reset to the route defaults ignoring URL params
      * @param  bool $encode Tells to encode URL parts on output
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return string Resulting absolute URL path
      */
     public function assemble($userParams, $name = null, $reset = false, $encode = true)
     {
         if (!is_array($userParams))
         {
-            throw new EhrlichAndreas_Util_Exception('userParams must be an array');
+            throw new EhrlichAndreas_Mvc_Exception('userParams must be an array');
         }
         
         if ($name == null)
@@ -274,7 +274,7 @@ class EhrlichAndreas_Mvc_Router
             {
                 $name = $this->getCurrentRouteName();
             }
-            catch (EhrlichAndreas_Util_Exception $e)
+            catch (EhrlichAndreas_Mvc_Exception $e)
             {
                 $name = 'default';
             }
@@ -342,14 +342,14 @@ class EhrlichAndreas_Mvc_Router
     /**
      * Retrieve a currently matched route
      *
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return EhrlichAndreas_Mvc_Route Route object
      */
     public function getCurrentRoute()
     {
         if (!isset($this->_currentRoute))
         {
-            throw new EhrlichAndreas_Util_Exception("Current route is not defined");
+            throw new EhrlichAndreas_Mvc_Exception("Current route is not defined");
         }
         
         return $this->getRoute($this->_currentRoute);
@@ -358,14 +358,14 @@ class EhrlichAndreas_Mvc_Router
     /**
      * Retrieve a name of currently matched route
      *
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return string Route object
      */
     public function getCurrentRouteName()
     {
         if (!isset($this->_currentRoute))
         {
-            throw new EhrlichAndreas_Util_Exception("Current route is not defined");
+            throw new EhrlichAndreas_Mvc_Exception("Current route is not defined");
         }
         
         return $this->_currentRoute;
@@ -419,14 +419,14 @@ class EhrlichAndreas_Mvc_Router
      * Retrieve a named route
      *
      * @param string $name Name of the route
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return EhrlichAndreas_Mvc_Route Route object
      */
     public function getRoute($name)
     {
         if (!isset($this->_routes[$name]))
         {
-            throw new EhrlichAndreas_Util_Exception("Route $name is not defined");
+            throw new EhrlichAndreas_Mvc_Exception("Route $name is not defined");
         }
 
         return $this->_routes[$name];
@@ -469,14 +469,14 @@ class EhrlichAndreas_Mvc_Router
      * Remove a route from the route chain
      *
      * @param  string $name Name of the route
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return EhrlichAndreas_Mvc_Router
      */
     public function removeRoute($name)
     {
         if (!isset($this->_routes[$name]))
         {
-            throw new EhrlichAndreas_Util_Exception("Route $name is not defined");
+            throw new EhrlichAndreas_Mvc_Exception("Route $name is not defined");
         }
 
         unset($this->_routes[$name]);
@@ -488,7 +488,7 @@ class EhrlichAndreas_Mvc_Router
      * Find a matching route to the current PATH_INFO and inject
      * returning values to the Request object.
      *
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      * @return EhrlichAndreas_Mvc_Request Request object
      */
     public function route($request)
@@ -524,7 +524,7 @@ class EhrlichAndreas_Mvc_Router
 
         if (!$routeMatched)
         {
-             throw new EhrlichAndreas_Util_Exception('No route matched the request', 404);
+             throw new EhrlichAndreas_Mvc_Exception('No route matched the request', 404);
         }
 
         if($this->_useCurrentParamsAsGlobal)

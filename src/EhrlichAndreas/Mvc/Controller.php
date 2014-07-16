@@ -53,7 +53,7 @@ class EhrlichAndreas_Mvc_Controller
      * @param  string $methodName
      * @param  array $args
      * @return void
-     * @throws Zend_Controller_Action_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      */
     public function __call($methodName, $args)
     {
@@ -72,12 +72,12 @@ class EhrlichAndreas_Mvc_Controller
             
             $message = 'Action "%s" does not exist and was not trapped in __call()';
             
-            throw new EhrlichAndreas_Util_Exception(sprintf($message, $action), 404);
+            throw new EhrlichAndreas_Mvc_Exception(sprintf($message, $action), 404);
         }
         
         $message = 'Method "%s" does not exist and was not trapped in __call()';
 
-        throw new EhrlichAndreas_Util_Exception(sprintf($message, $methodName), 500);
+        throw new EhrlichAndreas_Mvc_Exception(sprintf($message, $methodName), 500);
     }
 
     /**

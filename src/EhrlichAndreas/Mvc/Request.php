@@ -129,7 +129,7 @@ class EhrlichAndreas_Mvc_Request
      *
      * @param string $uri
      * @return void
-     * @throws EhrlichAndreas_Util_Exception when invalid URI passed
+     * @throws EhrlichAndreas_Mvc_Exception when invalid URI passed
      */
     public function __construct($uri = null)
     {
@@ -149,7 +149,7 @@ class EhrlichAndreas_Mvc_Request
             
             if ($status === false)
             {
-                throw new EhrlichAndreas_Util_Exception('Internal error: scheme-specific decomposition failed');
+                throw new EhrlichAndreas_Mvc_Exception('Internal error: scheme-specific decomposition failed');
             }
 
             // Failed decomposition; no further processing needed
@@ -174,7 +174,7 @@ class EhrlichAndreas_Mvc_Request
             
             if ($status === false)
             {
-                throw new EhrlichAndreas_Util_Exception('Internal error: authority decomposition failed');
+                throw new EhrlichAndreas_Mvc_Exception('Internal error: authority decomposition failed');
             }
 
             // Save remaining URI components
@@ -211,7 +211,7 @@ class EhrlichAndreas_Mvc_Request
 
                 $this->setRequestUri($path);
             } else {
-                throw new EhrlichAndreas_Util_Exception('Invalid URI provided to constructor');
+                throw new EhrlichAndreas_Mvc_Exception('Invalid URI provided to constructor');
             }
              * 
              */
@@ -326,11 +326,11 @@ class EhrlichAndreas_Mvc_Request
      * @param string $key
      * @param mixed $value
      * @return void
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      */
     public function __set($key, $value)
     {
-        throw new EhrlichAndreas_Util_Exception('Setting values in superglobals not allowed; please use setParam()');
+        throw new EhrlichAndreas_Mvc_Exception('Setting values in superglobals not allowed; please use setParam()');
     }
 
     /**
@@ -536,13 +536,13 @@ class EhrlichAndreas_Mvc_Request
      *
      * @param string $header HTTP header name
      * @return string|false HTTP header value, or false if not found
-     * @throws EhrlichAndreas_Util_Exception
+     * @throws EhrlichAndreas_Mvc_Exception
      */
     public function getHeader($header)
     {
         if (empty($header))
         {
-            throw new EhrlichAndreas_Util_Exception('An HTTP header name is required');
+            throw new EhrlichAndreas_Mvc_Exception('An HTTP header name is required');
         }
 
         // Try to get it from the $_SERVER array first
@@ -1466,7 +1466,7 @@ class EhrlichAndreas_Mvc_Request
     {
         if ((null === $value) && !is_array($spec))
         {
-            throw new EhrlichAndreas_Util_Exception('Invalid value passed to setPost(); must be either array of values or key/value pair');
+            throw new EhrlichAndreas_Mvc_Exception('Invalid value passed to setPost(); must be either array of values or key/value pair');
         }
         
         if ((null === $value) && is_array($spec))
@@ -1495,7 +1495,7 @@ class EhrlichAndreas_Mvc_Request
     {
         if ((null === $value) && !is_array($spec))
         {
-            throw new EhrlichAndreas_Util_Exception('Invalid value passed to setQuery(); must be either array of values or key/value pair');
+            throw new EhrlichAndreas_Mvc_Exception('Invalid value passed to setQuery(); must be either array of values or key/value pair');
         }
         
         if ((null === $value) && is_array($spec))

@@ -289,6 +289,21 @@ class EhrlichAndreas_Mvc_View
 
 		return $this;
 	}
+    
+    public function baseUrl()
+    {
+        $baseUrl = EhrlichAndreas_Mvc_FrontController::getInstance()->getBaseUrl();
+        
+        // Remove scriptname, eg. index.php from baseUrl
+        if (isset($_SERVER['SCRIPT_NAME']) && ($pos = strripos($baseUrl, basename($_SERVER['SCRIPT_NAME']))) !== false)
+        {
+            $baseUrl = substr($baseUrl, 0, $pos);
+        }
+        
+        $baseUrl = rtrim($baseUrl, '/\\');
+        
+        return $baseUrl;
+    }
 
     /**
      * Clear all assigned variables

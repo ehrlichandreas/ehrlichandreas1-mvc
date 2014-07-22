@@ -100,6 +100,8 @@ class EhrlichAndreas_Mvc_FrontController
         
         $request = $router->route($request);
         
+        $this->setRequest($request);
+        
         $response = $this->runByParameter($request);
         
         $this->getView()->assign('maincontent', $response);
@@ -144,7 +146,7 @@ class EhrlichAndreas_Mvc_FrontController
     /**
      * Return the request object.
      *
-     * @return null|EhrlichAndreas_Mvc_Controller
+     * @return null|EhrlichAndreas_Mvc_Request
      */
     public function getRequest()
     {

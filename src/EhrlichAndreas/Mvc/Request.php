@@ -1369,7 +1369,7 @@ class EhrlichAndreas_Mvc_Request
      * Can be empty array, or contain one or more of '_GET' or '_POST'.
      *
      * @param  array $paramSoures
-     * @return Zend_Controller_Request_Http
+     * @return EhrlichAndreas_Mvc_Request
      */
     public function setParamSources(array $paramSources = array())
     {

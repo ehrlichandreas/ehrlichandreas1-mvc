@@ -351,7 +351,7 @@ class EhrlichAndreas_Mvc_Route
     }
 
 	/**
-	 * Instantiates route based on passed Zend_Config structure
+	 * Instantiates route based on passed config structure
 	 *
 	 * @param array $config Configuration object
 	 */

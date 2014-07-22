@@ -119,11 +119,20 @@ class EhrlichAndreas_Mvc_Controller
     /**
      * Return the Response object
      *
-     * @return Zend_Controller_Response_Abstract
+     * @return EhrlichAndreas_Mvc_Response
      */
     public function getResponse()
     {
         return $this->_response;
+    }
+    
+    /**
+     * 
+     * @return EhrlichAndreas_Mvc_View
+     */
+    public function getView()
+    {
+        return $this->_view;
     }
     
     /**

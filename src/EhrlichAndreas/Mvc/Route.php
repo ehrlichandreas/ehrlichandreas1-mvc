@@ -469,7 +469,14 @@ class EhrlichAndreas_Mvc_Route
         
         $values = array();
 
-        $res = preg_match($regex, $path, $values);
+        if (preg_match($regex, null))
+        {
+            $res = preg_match($regex, $path, $values);
+        }
+        else
+        {
+            $res = 0;
+        }
 
         if ($res === 0)
         {

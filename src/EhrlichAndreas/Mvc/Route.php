@@ -466,6 +466,8 @@ class EhrlichAndreas_Mvc_Route
         {
             $regex = '#^' . $this->_regex . '#i';
         }
+        
+        $values = array();
 
         $res = preg_match($regex, $path, $values);
 
@@ -480,12 +482,19 @@ class EhrlichAndreas_Mvc_Route
         }
 
         // array_filter_key()? Why isn't this in a standard PHP function set yet? :)
-        foreach ($values as $i => $value)
+        if (!empty($values))
         {
-            if (!is_int($i) || $i === 0)
+            foreach ($values as $i => $value)
             {
-                unset($values[$i]);
+                if (!is_int($i) || $i === 0)
+                {
+                    unset($values[$i]);
+                }
             }
+        }
+        else
+        {
+            $values = array();
         }
 
         $this->_values = $values;

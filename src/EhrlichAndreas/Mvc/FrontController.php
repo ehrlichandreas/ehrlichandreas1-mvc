@@ -77,7 +77,7 @@ class EhrlichAndreas_Mvc_FrontController
      * @param  string      $section Name of the config section containing view's definitions
      * @return EhrlichAndreas_Mvc_FrontController
      */
-    public function addViewConfig($config, $section)
+    public function addViewConfig($config, $section = null)
     {
         $this->_view->addConfig($config, $section);
         

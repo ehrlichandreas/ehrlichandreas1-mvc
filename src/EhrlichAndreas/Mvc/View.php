@@ -40,6 +40,12 @@ class EhrlichAndreas_Mvc_View
      *
      * @var string 
      */
+    protected $_layoutPath = null;
+    
+    /**
+     *
+     * @var string 
+     */
     protected $_scriptPath = null;
 
 	/**
@@ -143,6 +149,53 @@ class EhrlichAndreas_Mvc_View
      * @param string $name The base name of the script.
      * @return void
      */
+    protected function _layout($name)
+    {
+        if (is_null($this->_layoutPath))
+        {
+            return $this->_script($name);
+        }
+        
+        $scriptPath = rtrim($this->_layoutPath, '\\/') . DIRECTORY_SEPARATOR;
+        
+        $fileExtension = '.' . ltrim($this->_fileExtension, '.');
+        
+        $name = preg_replace('#[\:]+#uis', '_', $name);
+        
+        $name = mb_strtolower($name, 'UTF-8');
+        
+        $file = $name . $fileExtension ;
+        
+        $path = $scriptPath . $file;
+        
+        if (is_readable($path))
+        {
+            return $path;
+        }
+
+        $message = "script '" . $file . "' not found in path (" . $scriptPath  . ")";
+        
+        $e = new EhrlichAndreas_Mvc_Exception($message);
+        
+        throw $e;
+    }
+
+    /**
+     * Includes the view script in a scope with only public $this variables.
+     *
+     * @param string The view script to execute.
+     */
+    protected function _run()
+    {
+        include func_get_arg(0);
+    }
+
+    /**
+     * Finds a view script from the available directories.
+     *
+     * @param string $name The base name of the script.
+     * @return void
+     */
     protected function _script($name)
     {
         if (is_null($this->_scriptPath))
@@ -176,16 +229,6 @@ class EhrlichAndreas_Mvc_View
         $e = new EhrlichAndreas_Mvc_Exception($message);
         
         throw $e;
-    }
-
-    /**
-     * Includes the view script in a scope with only public $this variables.
-     *
-     * @param string The view script to execute.
-     */
-    protected function _run()
-    {
-        include func_get_arg(0);
     }
 
     /**
@@ -228,6 +271,10 @@ class EhrlichAndreas_Mvc_View
             elseif ($name == 'layout')
             {
                 $this->_layout = $info;
+            }
+            elseif ($name == 'layoutpath')
+            {
+                $this->_layoutPath = $info;
             }
             elseif ($name == 'scriptpath')
             {
@@ -378,6 +425,32 @@ class EhrlichAndreas_Mvc_View
      * @return false|string False if script not found
      * @throws EhrlichAndreas_Mvc_Exception if no script directory set
      */
+    public function getLayoutPath($name)
+    {
+        try
+        {
+            $path = $this->_layout($name);
+            
+            return $path;
+        }
+        catch (EhrlichAndreas_Mvc_Exception $e)
+        {
+            if (strstr($e->getMessage(), 'no view layout directory set'))
+            {
+                throw $e;
+            }
+
+            return false;
+        }
+    }
+
+    /**
+     * Return full path to a view script specified by $name
+     *
+     * @param  string $name
+     * @return false|string False if script not found
+     * @throws EhrlichAndreas_Mvc_Exception if no script directory set
+     */
     public function getScriptPath($name)
     {
         try
@@ -430,10 +503,18 @@ class EhrlichAndreas_Mvc_View
      * @param string $name The script name to process.
      * @return string The script output.
      */
-    public function render($name)
+    public function render($name, $isLayout = false)
     {
-        // find the script file name using the parent private method
-        $file = $this->_script($name);
+        if ($isLayout === false)
+        {
+            // find the script file name using the private method
+            $file = $this->_script($name);
+        }
+        else
+        {
+            // find the layout file name using the private method
+            $file = $this->_layout($name);
+        }
         
         // remove $name from local scope
         unset($name);
@@ -458,6 +539,21 @@ class EhrlichAndreas_Mvc_View
     public function setEncoding($encoding)
     {
         $this->_encoding = $encoding;
+        return $this;
+    }
+
+    /**
+     * Resets the stack of view script paths.
+     *
+     * To clear path, use EhrlichAndreas_Mvc_View::setLayoutPath(null).
+     *
+     * @param string|array The directory (-ies) to set as the path.
+     * @return EhrlichAndreas_Mvc_View
+     */
+    public function setLayoutPath($path)
+    {
+        $this->_layoutPath = $path;
+        
         return $this;
     }
 

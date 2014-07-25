@@ -108,7 +108,7 @@ class EhrlichAndreas_Mvc_FrontController
         
         $layout = $this->getView()->getLayout();
         
-        return $this->getView()->render($layout);
+        return $this->getView()->render($layout, true);
     }
 
     /**

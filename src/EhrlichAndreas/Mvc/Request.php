@@ -447,6 +447,7 @@ class EhrlichAndreas_Mvc_Request
      * @param  boolean $checkProxy
      * @return string
      */
+    /*
     public function getClientIp($checkProxy = true)
     {
         if ($checkProxy && $this->getServer('HTTP_CLIENT_IP') != null)
@@ -463,6 +464,126 @@ class EhrlichAndreas_Mvc_Request
         }
 
         return $ip;
+    }
+     * 
+     */
+    public function getClientIp($checkProxy = false)
+    {
+        $ipAddr = null;
+
+        if ($checkProxy == true)
+        {
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getServer('HTTP_CLIENT_IP');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getEnv('HTTP_CLIENT_IP');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getServer('HTTP_X_FORWARDED_FOR');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getEnv('HTTP_X_FORWARDED_FOR');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getServer('REMOTE_ADDR');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getEnv('REMOTE_ADDR');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getServer('HTTP_CLIENTADDRESS');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getEnv('HTTP_CLIENTADDRESS');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getServer('HTTP_PC_REMOTE_ADDR');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getEnv('HTTP_PC_REMOTE_ADDR');
+            }
+        }
+        else
+        {
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getServer('REMOTE_ADDR');
+            }
+
+            if (empty($ipAddr))
+            {
+                $ipAddr = $this->getEnv('REMOTE_ADDR');
+            }
+        }
+
+        if (!empty($ipAddr))
+        {
+            $ipAddr = explode(',', $ipAddr);
+
+            $ipAddr = array_map('trim', $ipAddr);
+
+            $ipAddr = array_filter($ipAddr);
+
+            $ipAddr = array_values($ipAddr);
+        }
+
+        if (!empty($ipAddr))
+        {
+            $ipAddr = $ipAddr[0];
+        }
+
+        $options = func_get_args();
+
+        if ($checkProxy == true && count($options) > 1 && is_array($options[1]))
+        {
+            $proxyIPs = $options[1];
+
+            if (!empty($proxyIPs))
+            {
+                if (!is_array($proxyIPs))
+                {
+                    $proxyIPs = explode(',', $proxyIPs);
+
+                    $proxyIPs = array_map('trim', $proxyIPs);
+
+                    $proxyIPs = array_filter($proxyIPs);
+
+                    $proxyIPs = array_values($proxyIPs);
+                }
+
+                $proxyIPs = array_combine($proxyIPs, $proxyIPs);
+            }
+
+            if (!in_array($ipAddr, $proxyIPs))
+            {
+                //$ipaddr = $ipaddr . "???"; //We're not certain that this ip address is correct.
+                //$ipaddr = $this->getServer('REMOTE_ADDR'); //local proxy address
+            }
+        }
+
+        $ipAddr = trim($ipAddr);
+
+        return $ipAddr;
     }
 
     /**

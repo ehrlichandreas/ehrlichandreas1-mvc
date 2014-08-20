@@ -467,7 +467,7 @@ class EhrlichAndreas_Mvc_Request
     }
      * 
      */
-    public function getClientIp($checkProxy = false)
+    public function getClientIp($checkProxy = true)
     {
         $ipAddr = null;
 

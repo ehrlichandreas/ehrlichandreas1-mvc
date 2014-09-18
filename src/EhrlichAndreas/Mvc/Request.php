@@ -122,6 +122,11 @@ class EhrlichAndreas_Mvc_Request
     protected $_aliases = array();
 
     /**
+     * @var EhrlichAndreas_Mvc_Parameters
+     */
+    protected $fileParams = null;
+
+    /**
      * Constructor
      *
      * If a $uri is passed, the object will attempt to populate itself using
@@ -219,6 +224,14 @@ class EhrlichAndreas_Mvc_Request
         else
         {
             $this->setRequestUri();
+        }
+        
+        if (isset($GLOBALS) && isset($GLOBALS['_FILES']) && !empty($_FILES))
+        {
+            // convert PHP $_FILES superglobal
+            $files = $this->mapPhpFiles();
+            
+            $this->setFiles(new EhrlichAndreas_Mvc_Parameters($files));
         }
     }
 
@@ -648,6 +661,28 @@ class EhrlichAndreas_Mvc_Request
         }
 
         return (isset($_ENV[$key])) ? $_ENV[$key] : $default;
+    }
+
+    /**
+     * Return the parameter container responsible for file parameters or a single file.
+     *
+     * @param string|null           $name            Parameter name to retrieve, or null to get the whole container.
+     * @param mixed|null            $default         Default value to use when the parameter is missing.
+     * @return EhrlichAndreas_Mvc_Parameters|mixed
+     */
+    public function getFiles($name = null, $default = null)
+    {
+        if ($this->fileParams === null)
+        {
+            $this->fileParams = new EhrlichAndreas_Mvc_Parameters();
+        }
+
+        if ($name === null)
+        {
+            return $this->fileParams;
+        }
+
+        return $this->fileParams->get($name, $default);
     }
 
     /**
@@ -1169,6 +1204,48 @@ class EhrlichAndreas_Mvc_Request
     }
 
     /**
+     * Convert PHP superglobal $_FILES into more sane parameter=value structure
+     * This handles form file input with brackets (name=files[])
+     *
+     * @return array
+     */
+    protected function mapPhpFiles()
+    {
+        $files = array();
+        foreach ($_FILES as $fileName => $fileParams) {
+            $files[$fileName] = array();
+            foreach ($fileParams as $param => $data) {
+                if (!is_array($data)) {
+                    $files[$fileName][$param] = $data;
+                } else {
+                    foreach ($data as $i => $v) {
+                        $this->mapPhpFileParam($files[$fileName], $param, $i, $v);
+                    }
+                }
+            }
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param array        $array
+     * @param string       $paramName
+     * @param int|string   $index
+     * @param string|array $value
+     */
+    protected function mapPhpFileParam(&$array, $paramName, $index, $value)
+    {
+        if (!is_array($value)) {
+            $array[$index][$paramName] = $value;
+        } else {
+            foreach ($value as $i => $v) {
+                $this->mapPhpFileParam($array[$index], $paramName, $i, $v);
+            }
+        }
+    }
+
+    /**
      * Alias to __set()
      *
      * @param string $key
@@ -1427,6 +1504,20 @@ class EhrlichAndreas_Mvc_Request
     public function setDispatched($flag = true)
     {
         $this->_dispatched = $flag ? true : false;
+        
+        return $this;
+    }
+
+    /**
+     * Provide an alternate Parameter Container implementation for file parameters in this object,
+     * (this is NOT the primary API for value setting, for that see getFiles())
+     *
+     * @param  EhrlichAndreas_Mvc_Parameters $files
+     * @return Request
+     */
+    public function setFiles(ParametersInterface $files)
+    {
+        $this->fileParams = $files;
         
         return $this;
     }

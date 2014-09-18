@@ -49,7 +49,7 @@ class EhrlichAndreas_Mvc_View
     protected $_scriptPath = null;
 
 	/**
-	 * @var EhrlichAndreas_Util_Array Variables container
+	 * @var EhrlichAndreas_Mvc_Parameters Variables container
 	 */
 	protected $_vars = null;
     
@@ -58,7 +58,7 @@ class EhrlichAndreas_Mvc_View
      */
     public function __construct()
     {
-        $this->_vars = new EhrlichAndreas_Util_Array();
+        $this->_vars = new EhrlichAndreas_Mvc_Parameters();
     }
 
     /**

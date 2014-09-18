@@ -1515,7 +1515,7 @@ class EhrlichAndreas_Mvc_Request
      * @param  EhrlichAndreas_Mvc_Parameters $files
      * @return Request
      */
-    public function setFiles(ParametersInterface $files)
+    public function setFiles($files)
     {
         $this->fileParams = $files;
         

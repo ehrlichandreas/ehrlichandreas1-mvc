@@ -142,6 +142,13 @@ class EhrlichAndreas_Mvc_Controller
     {
     }
     
+    public function forward($invokeParams = null)
+    {
+		$frontController = EhrlichAndreas_Mvc_FrontController::getInstance();
+        
+        return $frontController->runByParameter($invokeParams);
+    }
+    
     /**
      * Pre-dispatch routines
      *

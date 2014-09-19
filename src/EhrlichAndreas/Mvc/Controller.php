@@ -172,6 +172,57 @@ class EhrlichAndreas_Mvc_Controller
     protected function postDispatch()
     {
     }
+    
+    public function redirectToRoute($route = null, $params = array(), $options = array(), $reuseMatchedParams = false, $exit = true)
+    {
+        if (3 == func_num_args() && (is_bool($options) || is_scalar($options)))
+        {
+            $reuseMatchedParams = $options;
+            
+            $options = array();
+        }
+        
+        $router = EhrlichAndreas_Mvc_FrontController::getInstance()->getRouter();
+
+        if ($route === null)
+        {
+            $route = $router->getCurrentRoute();
+        }
+
+        if ($reuseMatchedParams)
+        {
+            $routeMatchParams = $this->getRequest()->getParams();
+
+            $params = array_merge($routeMatchParams, $params);
+        }
+        
+        $url = $router->assemble($params, $route);
+        
+        if (!preg_match('#^(https?|ftp)://#', $url))
+        {
+            $request = EhrlichAndreas_Mvc_FrontController::getInstance()->getRequest();
+            
+            $scheme = $request->getScheme();
+            
+            $httpHost = $request->getHttpHost();
+            
+            $url = $scheme . '://' . $httpHost . '/' . ltrim($url, '/');
+        }
+        
+        return $this->redirectToUrl($url, $exit);
+    }
+    
+    public function redirectToUrl($url, $exit = true)
+    {
+        header("Location: " . $url, TRUE, 302);
+        
+        if ($exit === true)
+        {
+            die();
+        }
+        
+        return;
+    }
 
     /**
      * 

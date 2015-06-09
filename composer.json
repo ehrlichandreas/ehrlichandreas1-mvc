@@ -1,7 +1,7 @@
 {
     "name":         "ehrlichandreas/ehrlichandreas1-mvc",
     "description":  "Zend Framework like mvc module",
-    "type":         "mvc",
+    "type":         "library",
     "keywords": 
     [
     ],

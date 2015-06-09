@@ -1421,7 +1421,7 @@ class EhrlichAndreas_Mvc_Request
             // Does the baseUrl have anything in common with the request_uri?
             $requestUri = $this->getRequestUri();
 
-            if (0 === strpos($requestUri, $baseUrl))
+            if (strlen($baseUrl) > 0 && 0 === strpos($requestUri, $baseUrl))
             {
                 // full $baseUrl matches
                 $this->_baseUrl = $baseUrl;
@@ -1429,7 +1429,7 @@ class EhrlichAndreas_Mvc_Request
                 return $this;
             }
 
-            if (0 === strpos($requestUri, dirname($baseUrl)))
+            if (strlen($baseUrl) > 0 && 0 === strpos($requestUri, dirname($baseUrl)))
             {
                 // directory portion of $baseUrl matches
                 $this->_baseUrl = rtrim(dirname($baseUrl), '/');
